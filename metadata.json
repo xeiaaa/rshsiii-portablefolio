@@ -1,0 +1,7 @@
+{
+  "name": "Portablefolio",
+  "description": "An all-in-one digital portfolio for students, parents, and teachers to track academic progress, manage graded works, and provide AI-driven learning support.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
