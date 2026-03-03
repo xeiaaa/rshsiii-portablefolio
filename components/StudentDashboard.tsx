@@ -48,6 +48,10 @@ export const StudentDashboard: React.FC<Props> = ({ studentName, studentId, work
   const myWorks = works.filter(w => w.studentId === studentId);
   const myTests = tests.filter(t => t.studentId === studentId);
 
+  const [subjectFilter, setSubjectFilter] = useState<string | null>(null);
+  const subjectsInWorks = [...new Set(myWorks.map(w => w.subject))].sort();
+  const filteredWorks = subjectFilter ? myWorks.filter(w => w.subject === subjectFilter) : myWorks;
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -427,14 +431,44 @@ export const StudentDashboard: React.FC<Props> = ({ studentName, studentId, work
              </button>
            </div>
 
+           {myWorks.length > 0 && (
+             <div className="flex flex-wrap gap-2">
+               <button
+                 onClick={() => setSubjectFilter(null)}
+                 className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
+                   subjectFilter === null
+                     ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100'
+                     : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                 }`}
+               >
+                 All
+               </button>
+               {subjectsInWorks.map((subject) => (
+                 <button
+                   key={subject}
+                   onClick={() => setSubjectFilter(subject)}
+                   className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
+                     subjectFilter === subject
+                       ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100'
+                       : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                   }`}
+                 >
+                   {subject}
+                 </button>
+               ))}
+             </div>
+           )}
+
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-             {myWorks.length === 0 ? (
+             {filteredWorks.length === 0 ? (
                 <div className="col-span-full py-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
                    <Upload className="mx-auto text-slate-300 mb-4" size={64} />
-                   <p className="text-slate-500 font-black text-xl uppercase tracking-widest">No Works Yet</p>
+                   <p className="text-slate-500 font-black text-xl uppercase tracking-widest">
+                     {myWorks.length === 0 ? 'No Works Yet' : `No works in ${subjectFilter}`}
+                   </p>
                 </div>
              ) : (
-               myWorks.map(work => (
+               filteredWorks.map(work => (
                  <div 
                    key={work.id} 
                    onClick={() => setSelectedWork(work)}
