@@ -81,7 +81,7 @@ const App: React.FC = () => {
               <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-lg">
                 <Layout size={32} />
               </div>
-              <span className="text-3xl font-black tracking-tight">Portablefolio</span>
+              <span className="text-3xl font-black tracking-tight">FolioGo</span>
             </div>
             <h1 className="text-5xl font-black text-slate-800 leading-tight">Your Digital <span className="text-indigo-600">Academic</span> Legacy.</h1>
             <p className="text-xl text-slate-500 leading-relaxed">
@@ -121,7 +121,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Layout className="text-indigo-600" />
-            <span className="font-black text-xl tracking-tighter text-slate-800">Portablefolio</span>
+            <span className="font-black text-xl tracking-tighter text-slate-800">FolioGo</span>
           </div>
           <div className="flex items-center gap-3">
              <div className="text-right hidden sm:block">
@@ -135,8 +135,8 @@ const App: React.FC = () => {
 
       <div className="py-8">
         {state.currentUser.role === UserRole.STUDENT && (
-          <StudentDashboard 
-            studentName={state.currentUser.name} 
+          <StudentDashboard
+            studentName={state.currentUser.name}
             studentId={state.currentUser.id}
             works={state.works}
             tests={state.tests}
@@ -146,23 +146,23 @@ const App: React.FC = () => {
           />
         )}
         {state.currentUser.role === UserRole.TEACHER && (
-          <TeacherDashboard 
-            teacherName={state.currentUser.name} 
+          <TeacherDashboard
+            teacherName={state.currentUser.name}
             teacherId={state.currentUser.id}
-            works={state.works} 
+            works={state.works}
             sections={state.sections}
             accounts={state.accounts}
           />
         )}
         {state.currentUser.role === UserRole.PARENT && (
-          <ParentDashboard 
+          <ParentDashboard
             parentName={state.currentUser.name}
-            student={state.accounts.find(a => a.id === state.currentUser?.linkedStudentId) as any} 
+            student={state.accounts.find(a => a.id === state.currentUser?.linkedStudentId) as any}
             works={state.works.filter(w => w.studentId === state.currentUser?.linkedStudentId)}
           />
         )}
         {state.currentUser.role === UserRole.ADMIN && (
-          <AdminDashboard 
+          <AdminDashboard
             adminName={state.currentUser.name}
             sections={state.sections}
             accounts={state.accounts}
